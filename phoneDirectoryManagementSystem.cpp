@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-int lastIndex = 0;
+int RECORD= 0;
 
 class Directory
 {
