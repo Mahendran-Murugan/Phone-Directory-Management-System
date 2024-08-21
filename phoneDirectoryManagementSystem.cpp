@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
-using namespace std;
+#include <fstream>
+using namespace std;	
+namespace 
 
-int lastIndex = 0;
+int Index = 0;
 
 class Directory
 {
@@ -12,24 +14,18 @@ public:
     Directory(int phoneno = 0, string fname = "", string lname = "")
     {
         this->phoneno = phoneno;
-        this->fname = fname;
-        this->lname = lname;
+        this->fname = firstname;
+        this->lname = lastname;
     }
 };
 
-void addDetail(Directory &d, int flag)
-{
-    string specific = "";
-    if (flag)
-        specific = " New";
-
-    cout << "Enter" << specific << " First Name: ";
-    cin >> d.fname;
-    cout << "\nEnter" << specific << " Last Name: ";
-    cin >> d.lname;
-    cout << "\nEnter" << specific << " Phone No: ";
-    cin >> d.phoneno;
+void listAllFiles(const string& path) {
+    cout << "Files in Directory:\n";
+    for (const auto& entry : fs::directory_iterator(path)) {
+        cout << entry.path().filename().string() << endl;
+    }
 }
+
 
 void displayDetails(Directory d[])
 {
@@ -60,7 +56,7 @@ void modifyDetail(Directory d[])
         if (d[i].fname == fname && d[i].lname == lname)
         {
             flag = 1;
-            addDetail(d[i], 1);
+            addfile(d[i], 1);
         }
     }
     if (flag)
@@ -98,23 +94,29 @@ void deleteDetail(Directory d[])
 int main()
 {
     const int count = 100;
+	int lastIndex = 0;
     Directory d[count];
     int ch;
-    cout << "\nWelcome to Phone Directory Management System\n";
+    cout << "\nMAIN MENU\n";
+    cout << "\n____________________\n";
     do
     {
-        cout << "\nSelect an Operation: \n\n1.Add New Details\n2.Display All Details\n3.Modify Specific Detail\n4.Delete a Details\n5.Exit\n\nEnter your Choice: ";
+       	cout << "1. To Display List of Files: n\";
+		cout << "2. TO create a new Directory: n\";
+		cout << "3.	To change a working directory:  n\";
+		cout << "4. EXIT n\";
+		cout << "Enter Your NUmber: n\";
         cin >> ch;
         cout << endl;
         switch (ch)
         {
         case 1:
-            addDetail(d[lastIndex], 0);
-            lastIndex++;
-            cout << "\nDetails Added Successfully..\n\n";
+             displayDetails(d);
             break;
         case 2:
-            displayDetails(d);
+           addFile(d[lastIndex], 0);
+            lastIndex++;
+            cout << "\nDetails Added Successfully..\n\n";
             break;
         case 3:
             modifyDetail(d);
